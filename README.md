@@ -2,5 +2,5 @@
 An implementation of a crude AI system using the Pico 8 game engine.
 Press Z to spawn enemies!
 
-[I'm an inline-style link](zombiez.html)
+<iframe width="560" height="315" src="zombiez.html></iframe>
 
