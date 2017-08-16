@@ -1,0 +1,3 @@
+
+src/main/resources/static/* linguist-vendored
+*.p8 linguist-language=Lua
