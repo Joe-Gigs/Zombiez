@@ -129,7 +129,6 @@ function enemydamage(bullet,zombie)
 	del(bullets,bullet)
 	zombie.damaged = true
 	zombie.health-=1
-
 	if zombie.health == 0 then
 		removezombie(zombie)
 	end
