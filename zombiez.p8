@@ -33,31 +33,26 @@ function _init()
 	player.sprint = false
 	player.sneak = false
 	player.flip = false
-	player.grounded = true
+	-- player.grounded = true
 
 	zombies = {}
 	bullets = {}
 	grass = {}
 
-	gravity = 0.2
+	gravity = 0.3
 end
 
 function _update()
---adding gravity to player object (todo: put in own function)
-	-- player.dy += gravity
-	-- player.y += player.dy 
+	if player.z != 0 then
+		player.z += player.dz
+		player.dz -= gravity
+		player.sp = 34
+		-- player.grounded = false
+	end
 
-	-- local v1=mget((player.x)/8,(player.y+8)/8)
-	-- local v2=mget((player.x+7)/8,(player.y+8)/8)
-
-	-- if player.dy>=0 then
-	-- 	--look for a solid tile (might be cool for water and traps)
-	-- 	if fget(v1,0) or fget(v2,0) then
-	-- 		player.dy = 0
-	-- 		--allow jumping again
-	-- 		player.grounded=true
-	-- 	end
-	-- end
+	if player.z < 0 then
+		player.z = 0 -- will bring back to the ground
+	end
 
 	updateplayer()
 		
@@ -73,23 +68,16 @@ function _update()
 end
 
 function playerjump()
-		if player.z != 0 then
-		player.z += player.dz
-		player.dz -= gravity
-		-- player.sp = 34
-		-- player.grounded = false
-	end
 	if player.z == 0 then
 		player.dz = player.jumpvel
 		player.z += player.dz
 	end
 
-	if player.z < 0 then
-		player.z = 0
-	end
+	
 
 	acc=player.acc
 	deacc=player.deacc
+
 	if player.z ~=0 then
 		acc=player.airacc
 		deacc=player.deairacc
@@ -150,7 +138,7 @@ function updateplayer()
 		spawnzombie()
 	end
 --reserved for jump button
-	if btnp(5) and player.grounded then
+	if btn(5) then
 		playerjump()
 	end
 end
@@ -174,7 +162,7 @@ function _draw()
 
 	print(player.z,35,60,0)
 	-- print(player.y,35,40,0)
-	print(player.grounded,36,8,0)
+	-- print(player.grounded,36,8,0)
 
 end
 
@@ -395,7 +383,7 @@ __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
 __gff__
-0000000000000000000000000000000000000000000000000000000000000000000000000100010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __map__
 2425242524252425242524252425242500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
