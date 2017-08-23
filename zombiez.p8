@@ -72,7 +72,7 @@ function _update()
 
 	updateplayer()
 		
-	foreach(zombies, updatezombies)
+	--foreach(zombies, updatezombies)
 
 	foreach(collectables,pickup)
 
@@ -155,10 +155,12 @@ function updateplayer()
 	if btn(2) then
 		player.y -= player.speed
 		player.sp = 8
+		crosshair.y -= player.speed
 	end
 
 	if btn(3) then
 		player.y += player.speed
+		crosshair.y += player.speed
 	end
 
 	if btn(4) then
@@ -173,6 +175,7 @@ function updateplayer()
 		playerjump() 
 	end
 
+--check for contact
 	if not btn(4) then
 		player.attacking = false
 
@@ -304,9 +307,9 @@ function _draw()
 		spr(c.sp,c.x,c.y,2,2)
 	end
 
-	print(player.attacking,35,-5,12)
-	print(player.sp,35,40,0)
-	print(player.flip,36,8,0)
+	print(zombie.x,35,-5,11)
+	print(crosshair.y,5,-5,8)
+	--print(player.flip,36,8,0)
 
 end
 
@@ -341,8 +344,8 @@ function rndb(l,h)
 	return flr(rnd(h-l)+l)
 end
 
-function enemydamage(bullet,zombie) 
-	del(bullets,bullet)
+function enemydamage(crosshair,zombie) 
+	-- del(bullets,bullet)
 	zombie.damaged = true
 	zombie.health-=1
 	if zombie.health == 0 then
@@ -384,19 +387,18 @@ function shoot()
 	add(bullets,bullet)
 end
 
---not in use atm
 function zombiebulletcollision()
-	for bullet in all(bullets) do
+	-- for bullet in all(bullets) do
 		for zombie in all(zombies) do
-			if (bullet.x+3<zombie.x+7) and
-				bullet.x+5>zombie.x+1 and
-				bullet.y+8>zombie.y+4 and
-				bullet.y+8>zombie.y then
-				enemydamage(bullet,zombie)
+			if (crosshair.x+3<zombie.x+7) and
+				crosshair.x+5>zombie.x+1 and
+				crosshair.y>zombie.y+4 and
+				crosshair.y>zombie.y then
+				enemydamage(crosshair,zombie)
 			end
 		end
 	end
-end
+-- end
 
 
 
