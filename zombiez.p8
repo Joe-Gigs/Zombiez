@@ -44,7 +44,7 @@ function _init()
 	collectables = {}
 	--topical!
 	eclipsemode = false
-	make_enemies(4)
+	make_enemies(2)
 
 	crosshair = {}
 	crosshair.sp = 32 
@@ -72,7 +72,7 @@ function _update()
 
 	updateplayer()
 		
-	--foreach(zombies, updatezombies)
+	foreach(zombies, updatezombies)
 
 	foreach(collectables,pickup)
 
