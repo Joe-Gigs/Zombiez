@@ -44,7 +44,7 @@ function _init()
 	collectables = {}
 	--topical!
 	eclipsemode = false
-	make_enemies(0)
+	make_enemies(4)
 
 	crosshair = {}
 	crosshair.sp = 32 
@@ -80,7 +80,9 @@ function _update()
 		pickup(c)
 	end
 	
-	zombiebulletcollision()
+	--checking for interaction between zombie and sword
+	zombieSwordCollide()
+
 	-- animateBloodyHead()
 
 	if player.flip == true then
@@ -88,7 +90,6 @@ function _update()
 	else
 		crosshair.x = player.x + 11
 	end 
-
 end
 
 function playerjump()
@@ -129,7 +130,6 @@ function updateplayer()
 		player.sp += 2
 
 		crosshair.x -= player.speed
-
 
 		if player.sp > 6 then
 			player.sp = 2
@@ -259,15 +259,6 @@ function longshadows()
 	shadow = 42
 end
 
-function pickup(collectable)
-	if (player.x > collectable.x - 8 and
-			player.x < collectable.x + 8 and
-			player.y > collectable.y - 8 and
-			player.y < collectable.y + 8) then
-		del(collectables,collectable)
-	end
-end
-
 function _draw()
 	move_camera()
 	cls(1)
@@ -307,9 +298,12 @@ function _draw()
 		spr(c.sp,c.x,c.y,2,2)
 	end
 
-	print(zombie.x,35,-5,11)
-	print(crosshair.y,5,-5,8)
-	--print(player.flip,36,8,0)
+	print(zombie.x,20,-5,11)
+	print(zombie.y,35,-5,11)
+
+
+	print(crosshair.x,55,-5,8)
+	print(player.attacking,75,-5,8)
 
 end
 
@@ -387,18 +381,27 @@ function shoot()
 	add(bullets,bullet)
 end
 
-function zombiebulletcollision()
-	-- for bullet in all(bullets) do
+function pickup(collectable)
+	if (player.x > collectable.x - 8 and
+			player.x < collectable.x + 8 and
+			player.y > collectable.y - 8 and
+			player.y < collectable.y + 8) then
+		del(collectables,collectable)
+	end
+end
+
+function zombieSwordCollide()
 		for zombie in all(zombies) do
-			if (crosshair.x+3<zombie.x+7) and
-				crosshair.x+5>zombie.x+1 and
-				crosshair.y>zombie.y+4 and
-				crosshair.y>zombie.y then
+			if (crosshair.x>zombie.x-8) and
+				crosshair.x<zombie.x+8 and
+				crosshair.y>zombie.y-8 and
+				crosshair.y<zombie.y+8 and
+				player.attacking == true then
 				enemydamage(crosshair,zombie)
 			end
 		end
 	end
--- end
+
 
 
 
