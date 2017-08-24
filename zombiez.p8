@@ -51,11 +51,6 @@ function _init()
 	crosshair.x = player.x + 11
 	crosshair.y = player.y + 3
 	
-	zombieHeadTest = {}
-	zombieHeadTest.sp = 68
-	zombieHeadTest.x = 69
-	zombieHeadTest.y = 50
-
 	--generate(column,40) 
 	--generatecollectable(bigsword,32)
 end
@@ -82,8 +77,6 @@ function _update()
 	
 	--checking for interaction between zombie and sword
 	zombieSwordCollide()
-
-	-- animateBloodyHead()
 
 	if player.flip == true then
 		crosshair.x = player.x - 2
@@ -199,19 +192,6 @@ function attackmode()
 	end
 end
 
-function animateBloodyHead()
-	zombieHeadTest.sp = 68
-	attacktmr += 1
-	if attacktmr == 3 then
-		zombieHeadTest.sp += 2
-	end
-
-	if attacktmr > 3 then
-		attacktmr = 0
-	end
-
-end
-
 function move_camera() 
 	camera_x = player.x - 64
 	camera_y = player.y - 64
@@ -298,13 +278,12 @@ function _draw()
 		spr(c.sp,c.x,c.y,2,2)
 	end
 
-	print(zombie.x,20,-5,11)
-	print(zombie.y,35,-5,11)
+	-- print(zombie.x,20,-5,11)
+	-- print(zombie.y,35,-5,11)
 
 
-	print(crosshair.x,55,-5,8)
-	print(player.attacking,75,-5,8)
-
+	-- print(crosshair.x,55,-5,8)
+	-- print(player.attacking,75,-5,8)
 end
 
 function updatezombies(z)
@@ -339,7 +318,6 @@ function rndb(l,h)
 end
 
 function enemydamage(crosshair,zombie) 
-	-- del(bullets,bullet)
 	zombie.damaged = true
 	zombie.health-=1
 	if zombie.health == 0 then
