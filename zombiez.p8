@@ -42,8 +42,7 @@ function _init()
 
 	sprites = {} --for random generation of level assets
 	collectables = {}
-	--topical!
-	eclipsemode = false
+
 	make_enemies(2)
 
 	crosshair = {}
@@ -108,6 +107,8 @@ function idleanimation()
 end
 
 function updateplayer()
+	--t += 1
+
 	idleanimation()
 	--timer for idle animations(blinking,fidgeting)
 	player.tick += 1
@@ -162,22 +163,13 @@ function updateplayer()
 	end
 
 	if btn(5) then
-		--longshadows()
-	
-		-- elseif btn(5) and eclipsemode == true then
 		playerjump() 
 	end
 
 --check for contact
 	if not btn(4) then
 		player.attacking = false
-
 	end
-
-	if player.attacking == true then
-		
-	end
-	
 end
 
 function attackmode()
@@ -234,11 +226,6 @@ function generatecollectable(collectable,num)
 	add(collectables,collectable)
 end
 
-function longshadows()
-	eclipsemode = true
-	shadow = 42
-end
-
 function _draw()
 	move_camera()
 	cls(1)
@@ -260,8 +247,6 @@ function _draw()
 
 	spr(crosshair.sp,crosshair.x,crosshair.y)
 
-	spr(zombieHeadTest.sp,zombieHeadTest.x,zombieHeadTest.y,2,2)
-
 	for z in all(zombies) do
 		spr(z.sp,z.x,z.y,2,2,z.flip)
 	end
@@ -278,7 +263,7 @@ function _draw()
 		spr(c.sp,c.x,c.y,2,2)
 	end
 
-	-- print(zombie.x,20,-5,11)
+	print(t,20,-5,11)
 	-- print(zombie.y,35,-5,11)
 
 
@@ -287,6 +272,7 @@ function _draw()
 end
 
 function updatezombies(z)
+	if z.dead == false then
 	z.tick-=1
 
 	if z.tick<=0 then
@@ -309,6 +295,7 @@ function updatezombies(z)
 				end
 			else --
 		z.tick=rndb(45,60)
+			end
 		end
 	end
 end
@@ -317,12 +304,16 @@ function rndb(l,h)
 	return flr(rnd(h-l)+l)
 end
 
-function enemydamage(crosshair,zombie) 
+function enemydamage(crosshair,zombie)
 	zombie.damaged = true
 	zombie.health-=1
+	zombie.dead = true
+	
 	if zombie.health == 0 then
-		removezombie(zombie)
+		zombie.sp=68
 	end
+
+		--removezombie(zombie)
 end
 
 function removezombie(zombie)
@@ -338,6 +329,7 @@ function spawnzombie()
 	zombie.health = 2
 	zombie.damaged = false
 	zombie.flip=false
+	zombie.dead = false
 
 	add(zombies,zombie)
 end
