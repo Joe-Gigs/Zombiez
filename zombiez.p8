@@ -230,8 +230,6 @@ end
 function _draw()
 	move_camera()
 	cls(1)
-
-	--camera(player.x-64,player.y-64)
 	--e.g. map(0,0, 20,20, 4,2)
 		---> draws a 4x2 blocks of cels starting from 0,0 in the map, to the screen at 20,20
 
@@ -309,10 +307,10 @@ end
 function enemydamage(crosshair,zombie)
 	zombie.damaged = true
 	zombie.health-=1
-	zombie.dead = true
 	
 	if zombie.health == 0 then
 		zombie.sp=68
+		zombie.dead = true
 	end
 
 		--removezombie(zombie)
@@ -330,7 +328,7 @@ function spawnzombie()
 	zombie.tick = rndb(45,60)
 	zombie.health = 2
 	zombie.damaged = false
-	zombie.flip=false
+	zombie.flip = false
 	zombie.dead = false
 
 	add(zombies,zombie)
