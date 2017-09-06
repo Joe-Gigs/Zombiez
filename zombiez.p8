@@ -104,7 +104,7 @@ function _draw()
 	-- print(zombie.y,35,-5,11)
 
 	-- print(crosshair.x,55,-5,8)
-	print(player.y,2,55,0)
+	--print(player.y,2,55,0)
 end
 
 function _update()
@@ -119,7 +119,7 @@ function _update()
 
 	updateplayer()
 		
-	foreach(zombies, updatezombies)
+	--foreach(zombies, updatezombies)
 
 	foreach(collectables,pickup)
 
