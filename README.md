@@ -1,3 +1,3 @@
 WIP
 
-![alt text](http://imgur.com/a/YWcCi)
+![Screenshot](http://imgur.com/a/YWcCi)
