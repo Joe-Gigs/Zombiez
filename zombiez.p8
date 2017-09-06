@@ -43,8 +43,6 @@ function _init()
 
 	zombies = {}
 	--temporary, testing health system
-
-
 	bullets = {}
 
 	gravity = 0.3
@@ -52,7 +50,8 @@ function _init()
 	sprites = {} --for random generation of level assets
 	collectables = {}
 
-	--make_enemies(0)
+
+	make_enemies(0)
 
 	crosshair = {}
 	crosshair.sp = 32 
@@ -62,9 +61,7 @@ function _init()
 	--todo put in loop
 	generate(building,192,0,0,4,2) 
 	
-	--generate(foundation,132,30,0)
-	--generate(windows,137,30,10)
-	--generate(building,128,0,30)
+	
 	
 end
 
