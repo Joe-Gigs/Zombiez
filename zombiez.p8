@@ -3,7 +3,7 @@ version 8
 __lua__
 --version history(updated 9/6/2017)
 --0.0.1: game engine built, simple zombie kill game 
---0.0.2: resolution changed to 64x64 for 'lowrez' aesthetic :). camera will be x axis only for panning back and forth beat em up style. Prerendering of the bottom half of buildings has been implemented,other half is runtime which allows for player to hide behind building. 
+--0.0.2: resolution changed to 64x64 for 'lowrez' aesthetic :). camera will be x axis only for panning back and forth beat em up style. prerendering of the bottom half of buildings has been implemented,other half is runtime which allows for player to hide behind building. 
 
 --pico8 functions
 -------------------------------
@@ -40,8 +40,10 @@ function _init()
 	player.flip = false
 	player.attacking = false
 	player.back = false
-	--lets try...
+	
 	player.collide_tiles = true
+	--will be for hiding behind structures, wip
+	player.hidden = true
 
 	zombies = {}
 	--temporary, testing health system
@@ -52,8 +54,7 @@ function _init()
 	sprites = {} --for random generation of level assets
 	collectables = {}
 
-
-	--make_enemies(0)
+	make_enemies(0)
 
 	crosshair = {}
 	crosshair.sp = 32 
@@ -63,7 +64,6 @@ function _init()
 	--todo put in loop
 	generate(building,192,0,0,4,2) 
 	
-
 end
 
 function _draw()
@@ -104,7 +104,7 @@ function _draw()
 	--print("cpu: "..stat(1),2,55,0)
 	-- print(zombie.y,35,-5,11)
 
-	--print(player.collide_tiles,20,55,8)
+	print(player.hidden,20,55,8)
 	print(player.y,2,55,0)
 end
 
@@ -121,7 +121,7 @@ function _update()
 
 	updateplayer()
 		
-	--foreach(zombies, updatezombies)
+	foreach(zombies, updatezombies)
 
 	foreach(collectables,pickup)
 
@@ -323,6 +323,8 @@ function generatecollectable(collectable,num)
 end
 
 function updatezombies(z)
+	local lzx=z.x -- last x
+ 	local lzy=z.y -- last y
 	if z.dead == false then
 	z.tick-=1
 
@@ -345,9 +347,14 @@ function updatezombies(z)
 				 z.y+=1
 				end
 			else 
-		z.tick=rndb(45,60)
+				z.tick=rndb(45,60)
 			end
 		end
+	end
+	--testing!
+	if player.hidden == true then
+		z.x = lzx
+		z.y = lzy
 	end
 end
 
@@ -448,7 +455,7 @@ __gfx__
 0000000000000000000000000000000033b33b3333333333dddddddddddddddd5555555500000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000bd33333b3d3b333355555555555555565555555500000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000333333333333333d5555555555555d655555555500000000000000000000000000000000000000000000000000000000
-000500000000000000000000000000003b33333333333333555555555555d6555555555500000000000000000000000000000000000000000000000000000000
+000800000000000000000000000000003b33333333333333555555555555d6555555555500000000000000000000000000000000000000000000000000000000
 000000000000000000000eaeeee00000333333333333333355555555555d65555555555500000000000000000000000000000000000000000000000000000000
 00000000000000000000eaeeeeee000033333333333333335555555555d655555555555500000000000000000000000000000000000000000000000000000000
 00000000000000000000eaeffffe000033333333333333b3555555555d6555555555555500000000000000000000000000000000000000000000000000000000
