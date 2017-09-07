@@ -1,9 +1,9 @@
 pico-8 cartridge // http://www.pico-8.com
 version 8
 __lua__
---version history(updated 9/3/2017)
+--version history(updated 9/6/2017)
 --0.0.1: game engine built, simple zombie kill game 
---0.0.2: resolution changed to 64x64 for 'lowrez' aesthetic :). camera will be x axis only for panning back and forth beat em up style. 
+--0.0.2: resolution changed to 64x64 for 'lowrez' aesthetic :). camera will be x axis only for panning back and forth beat em up style. Prerendering of the bottom half of buildings has been implemented,other half is runtime which allows for player to hide behind building. 
 
 --pico8 functions
 -------------------------------
@@ -104,7 +104,7 @@ function _draw()
 	--print("cpu: "..stat(1),2,55,0)
 	-- print(zombie.y,35,-5,11)
 
-	print(player.collide_tiles,20,55,8)
+	--print(player.collide_tiles,20,55,8)
 	print(player.y,2,55,0)
 end
 
