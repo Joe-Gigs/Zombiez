@@ -57,7 +57,7 @@ function _init()
 	sprites = {} --for random generation of level assets
 	collectables = {}
 
-	--make_enemies(0)
+	make_enemies(0)
 
 	crosshair = {}
 	crosshair.sp = 32 
@@ -106,10 +106,10 @@ function _draw()
 
 	
 	--print("cpu: "..stat(1),2,55,0)
-	print(player.hidden,35,55,0)
+	--print(player.hidden,35,55,0)
 
-	print(player.y,20,55,8)
-	print(player.x,2,55,0)
+	--print(player.y,20,55,8)
+	--print(player.x,2,55,0)
 end
 
 function _update()
@@ -436,9 +436,11 @@ function zombieswordcollide()
 	end
 
 	function hidefromzombies()
-		-- if  then 
-		-- 	player.hidden = true
-		-- end
+		if player.x >= 3 and player.x <= 18  then 
+			player.hidden = true
+		else
+			player.hidden = false
+		end
 	end
 
 
